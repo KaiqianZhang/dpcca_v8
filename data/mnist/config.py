@@ -13,7 +13,7 @@ import random
 import torch
 from   torchvision.utils import save_image
 
-from   data.celeba.config import Config
+from   data.config import Config
 from   data.mnist.dataset import MnistDataset
 from   models import LeNet5AE, AETanH
 
