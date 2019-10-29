@@ -9,42 +9,25 @@ import random
 from   torch.utils.data.sampler import SubsetRandomSampler
 from   torch.utils.data import DataLoader
 
-from   data import CelebAConfig
 from   data import GTExConfig
 from   data import GTExV8Config
-from   data import LatVarConfig
-from   data import LatVarImgConfig
 from   data import MnistConfig
-from   data import PacmanConfig
 
 # ------------------------------------------------------------------------------
 
 def get_config(dataset):
     """Return configuration object based on dataset string.
     """
-    SUPPORTED_DATASETS = ['celeba', 'gtex', 'gtexv8', 'latvar', 'latvarimg',
-                          'mnist', 'pacman', 'toy']
+    SUPPORTED_DATASETS = ['gtex', 'gtexv8', 'mnist']
 
     if dataset not in SUPPORTED_DATASETS:
         raise ValueError('Dataset %s is not supported.' % dataset)
-    if dataset == 'celeba':
-        return CelebAConfig()
     if dataset == 'gtex':
         return GTExConfig()
     if dataset == 'gtexv8':
         return GTExV8Config()
-    if dataset == 'latvar':
-        return LatVarConfig()
-    if dataset == 'latvarimg':
-        return LatVarImgConfig()
     if dataset == 'mnist':
         return MnistConfig()
-    if dataset == 'mixture':
-        return MixtureConfig()
-    if dataset == 'pacman':
-        return PacmanConfig()
-    if dataset == 'paired':
-        return PairedConfig()
 
 # ------------------------------------------------------------------------------
 
