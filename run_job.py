@@ -8,6 +8,7 @@ import itertools
 import sys
 import jobutils
 
+
 # ------------------------------------------------------------------------------
 
 def main(args):
@@ -46,6 +47,7 @@ def main(args):
 
         jobutils.run_job(cargs.directory, contents)
 
+
 # ------------------------------------------------------------------------------
 
 def gen_subdir(cargs, iter_fields):
@@ -63,22 +65,6 @@ def gen_subdir(cargs, iter_fields):
     jobutils.mkdir(subdir)
     return subdir
 
-# ------------------------------------------------------------------------------
-
-MODES = {
-    'ae'      : 'trainae.py',
-    'pcca'    : 'trainpcca.py',
-    'dpcca'   : 'traindpcca.py',
-    'jmvae'   : 'trainjmvae.py',
-    'mae'     : 'trainmae.py',
-    'vae'     : 'trainvae.py',
-    'dcca'    : 'traindcca.py',
-    'dvcca'   : 'traindvcca.py',
-    'twostage': 'traintwostage.py'
-}
-
-def mode_to_script(mode):
-    return MODES[mode]
 
 # ------------------------------------------------------------------------------
 
@@ -86,10 +72,6 @@ if __name__ == '__main__':
     now_str = jobutils.get_now_str()
     p = argparse.ArgumentParser()
 
-    p.add_argument('--mode',
-                   type=str,
-                   default='dpcca',
-                   choices=MODES.keys())
     p.add_argument('--root',
                    required=True,
                    type=lambda s: 'experiments/%s_%s' % (now_str, s))
@@ -114,6 +96,6 @@ if __name__ == '__main__':
     # Cache the command used to run this script. This way experiments are more
     # reproducible.
     args.exec_cmd = " ".join(sys.argv[:])
-    args.script   = mode_to_script(args.mode)
+    args.script = 'traindpcca.py'
 
     main(args)
