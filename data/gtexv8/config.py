@@ -16,7 +16,7 @@ from   torchvision.utils import save_image
 
 from   models import DCGANAE128, AELinear, AlexNetAEBN
 from   data.gtexv8.dataset import GTExV8Dataset
-from   data.gtexv8.config import GTExV8Config
+from   data.config import Config
 
 # ------------------------------------------------------------------------------
 
