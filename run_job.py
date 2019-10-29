@@ -55,13 +55,9 @@ def gen_subdir(cargs, iter_fields):
     """
     # Create root directory.
     jobutils.mkdir(cargs.root)
-
     subdir = '%s/%s' % (args.root, args.dataset)
-    subdir = jobutils.add_desc_to_dir(subdir, True, 'mode', args.mode)
-
     for f in iter_fields:
         subdir = jobutils.add_desc_to_dir(subdir, True, f, getattr(cargs, f))
-
     jobutils.mkdir(subdir)
     return subdir
 
