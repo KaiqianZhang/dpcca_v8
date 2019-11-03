@@ -14,7 +14,7 @@ import numpy as np
 import torch
 from   torchvision.utils import save_image
 
-from   models import DCGANAE128, AELinear, AlexNetAEBN
+from   models import DCGANAE128, AELinear, AlexNetAEBN, CelebAAE
 from   data.gtexv8.dataset import GTExV8Dataset
 from   data.config import Config
 
@@ -36,7 +36,7 @@ class GTExV8Config(Config):
 # ------------------------------------------------------------------------------
 
     def get_image_net(self):
-        return DCGANAE128(self)
+        return CelebAAE(self)
         # return AlexNetAEBN(self)
 
 # ------------------------------------------------------------------------------
