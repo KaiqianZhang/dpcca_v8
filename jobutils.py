@@ -54,8 +54,7 @@ def gen_sbatch_file(run_job_cmd, script, args, mem=50, wall_time=24, n_gpus=1):
 #
 # python %s
 
-#SBATCH --mail-user=ggundersen@princeton.edu
-#SBATCH --mem %s
+#SBATCH --mem=%s
 #SBATCH --nodes=1
 #SBATCH --gres=gpu:tesla_p100:%s
 #SBATCH --ntasks-per-node=5
@@ -66,7 +65,7 @@ module load cudatoolkit/8.0 cudann/cuda-8.0/5.1
 module load anaconda3
 source activate dmcm
 
-cd /scratch/gpfs/gwg3/dmcm\n
+cd /scratch/gpfs/gwg3/dpcca_v8\n
 """ % (run_job_cmd, mem, n_gpus, logfile, wall_time)
     return header + script_cmd
 
