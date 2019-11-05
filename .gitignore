@@ -2,3 +2,4 @@ __pycache__/
 experiments/
 data/gtex/train_1000x1000.pth
 data/gtexv8/train.pth
+data/gtexv8/images
