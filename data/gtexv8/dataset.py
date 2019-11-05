@@ -58,9 +58,9 @@ class GTExV8Dataset(Dataset):
         """
         sample_id = self.samples[i]
 
-        fname  = self.images_df.loc[sample_id]
-        fpath  = '%s/images/%s' % (self.cfg.ROOT_DIR, fname)
-        pixels = Image.open(fpath)
+        fname  = self.images_df.loc[sample_id]['filename']
+        fpath  = f'{self.cfg.ROOT_DIR}/images/{fname}'
+        pixels = Image.open(fpath).convert('RGB')
 
         bad_crop = True
         while bad_crop:
