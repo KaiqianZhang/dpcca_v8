@@ -38,6 +38,7 @@ class GTExV8Config(Config):
     def get_image_net(self):
         return CelebAAE(self)
         # return AlexNetAEBN(self)
+        # return DCGANAE128(self)
 
 # ------------------------------------------------------------------------------
 

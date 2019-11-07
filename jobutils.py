@@ -56,7 +56,7 @@ def gen_sbatch_file(run_job_cmd, script, args, mem=50, wall_time=24, n_gpus=1):
 
 #SBATCH --mem=%s
 #SBATCH --nodes=1
-#SBATCH --gres=gpu:tesla_p100:%s
+#SBATCH --gres=gpu:%s
 #SBATCH --ntasks-per-node=5
 #SBATCH --output=%s
 #SBATCH --time=%s:00:00
