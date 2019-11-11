@@ -62,13 +62,12 @@ def main(args):
     pprint.log_section('Training model.')
     for epoch in range(1, args.n_epochs + 1):
 
-        train_msgs, grad_msgs, nlls = train(args, train_loader, model,
-                                            optimizer)
-        test_msgs = test(cfg, args, epoch, test_loader, model)
+        train_msgs, grad_msgs = train(args, train_loader, model, optimizer)
+        with torch.no_grad():
+            test_msgs = test(cfg, args, epoch, test_loader, model)
 
         pprint.log_line(epoch, train_msgs, test_msgs)
         pprint.log_gradients(epoch, grad_msgs)
-        pprint.log_nlls(epoch, nlls)
 
         if epoch % LOG_EVERY == 0:
             save_samples(args.directory, model, test_loader, cfg, epoch)
@@ -94,12 +93,10 @@ def train(args, train_loader, model, optimizer):
     grad_norm_sum = 0
 
     for i, (x1, x2) in enumerate(train_loader):
-
         optimizer.zero_grad()
 
         x1 = x1.to(device)
         x2 = x2.to(device)
-
         x1r, x2r = model.forward([x1, x2])
 
         ae_loss1 = F.mse_loss(x1r, x1)
@@ -116,18 +113,18 @@ def train(args, train_loader, model, optimizer):
         ae_loss2_sum += ae_loss2.item()
         l1_loss_sum  += l1_loss.item()
 
-    negloglike     = model.neg_log_likelihood([x1, x2]) / (i+1)
+    #negloglike     = model.neg_log_likelihood([x1, x2]) / (i+1)
     ae_loss1_sum  /= (i+1)
     ae_loss2_sum  /= (i+1)
     l1_loss_sum   /= (i+1)
     grad_norm_sum /= (i+1)
 
-    train_msgs = [ae_loss1_sum, ae_loss2_sum, l1_loss_sum, negloglike,
+    train_msgs = [ae_loss1_sum, ae_loss2_sum, l1_loss_sum, 
                   model.pcca.iters_req]
     grad_msgs  = [grad_norm_sum]
-    nlls       = model.pcca.nlls
+    #nlls       = model.pcca.nlls
 
-    return train_msgs, grad_msgs, nlls
+    return train_msgs, grad_msgs#, nlls
 
 # ------------------------------------------------------------------------------
 
@@ -145,7 +142,6 @@ def test(cfg, args, epoch, test_loader, model):
 
         x1 = x1.to(device)
         x2 = x2.to(device)
-
         x1r, x2r = model.forward([x1, x2])
 
         ae_loss1 = F.mse_loss(x1r, x1)
@@ -160,12 +156,12 @@ def test(cfg, args, epoch, test_loader, model):
             cfg.save_comparison(args.directory, x1, x1r, epoch, is_x1=True)
             cfg.save_comparison(args.directory, x2, x2r, epoch, is_x1=False)
 
-    negloglike    = model.neg_log_likelihood([x1, x2]) / (i+1)
+    #negloglike    = model.neg_log_likelihood([x1, x2]) / (i+1)
     ae_loss1_sum /= (i+1)
     ae_loss2_sum /= (i+1)
     l1_loss_sum  /= (i+1)
 
-    test_msgs = [ae_loss1_sum, ae_loss2_sum, l1_loss_sum, negloglike]
+    test_msgs = [ae_loss1_sum, ae_loss2_sum, l1_loss_sum]#, negloglike]
 
     return test_msgs
 

@@ -58,7 +58,7 @@ class GTExV8Dataset(Dataset):
         """
         sample_id = self.samples[i]
 
-        fname  = self.images_df.loc[sample_id]['filename']
+        fname  = self.images_df.loc[sample_id]
         fpath  = f'{self.cfg.ROOT_DIR}/images/{fname}'
         pixels = Image.open(fpath).convert('RGB')
 

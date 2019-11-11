@@ -452,7 +452,7 @@ class PCCA(nn.Module):
         # For numerical stability. For Psi to be PD, all elements must be
         # positive: https://math.stackexchange.com/a/927916/159872.
         Psi_diag = LA.to_positive(Psi_diag)
-        R = torch.potrf(diag(Psi_diag), upper=False)
+        R = torch.cholesky(diag(Psi_diag), upper=False)
         return Lambda @ z + R @ eps
 
 # ------------------------------------------------------------------------------
